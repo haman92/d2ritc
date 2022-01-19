@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>D2R 아이템 중계소</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div class="d-flex bg-dark" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-dark" id="sidebar-wrapper">
+
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item"><a class="nav-link disabled" th:text="${battletag}"></a></li>
+               		            <li class="nav-item active"><a class="nav-link" th:href="@{/}">홈</a></li>
+                                <li class="nav-item active"><a class="nav-link" th:href="@{/search}">검색</a></li>
+                                <li class="nav-item active"><a class="nav-link" th:href="@{/insert}">물품등록</a></li>
+                                <li class="nav-item active"><a class="nav-link" th:href="@{/mypage}">마이페이지</a></li>
+                                <li class="nav-item"><a class="nav-link" tH:href="@{/logout}">로그아웃</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+		   
+		   <div class="container">
+		   		<!--#search bar-->
+		   		<datalist id="statfilter1mod"></datalist>
+				<datalist id="namesearchoption"></datalist>
+				<datalist id="statfilter2mod"></datalist>
+				<datalist id="statfilter2skill"></datalist>
+				<datalist id="runewordname"></datalist>
+				<datalist id="runename"></datalist>
+			    <div class="row">
+			        <div class="col-md-8">
+							<input class="form-control" list="" id="name-search-bar1" placeholder="검색 할 아이템 이름을 입력해주세요.">
+								
+							
+							
+					</div>
+			        
+			        <div class="col-md-2">
+
+			        		<select class="form-select" id = "ladderhardcoreinput" data-width="100%" >
+							<!--<option value="래더">래더</option>	
+							<option value="하드코어 래더">하드코어 래더</option>-->
+							<option value="스탠다드">스탠다드</option>
+							<option value="하드코어 스탠다드">하드코어 스탠다드</option>
+							</select>
+			        </div>
+			        
+			    </div>
+			    <div class="row">
+			        		<p class="text-light fs-2 "></p>
+			    </div>
+			    <!--#category-->
+			    <div class="row">
+			        <div class="col-md-6">
+			        
+						<div class="row">	
+								        
+			        	<div class="col">
+			        	  
+			        		<p class="text-light fs-3 ">카테고리</p>
+			        	</div>
+			        	<div class="col-6">
+			        	
+			        		<input class="form-control" list="datalistOptions4" id="categoryinput" placeholder="ex) 부적">
+									<datalist id="datalistOptions4">
+									<option value="철퇴">
+									<option value="도끼">
+									<option value="도검">
+									<option value="단도">
+									<option value="투창">
+									<option value="창">
+									<option value="활">
+									<option value="지팡이">
+									<option value="미늘창">
+									<option value="쇠뇌">
+									<option value="손톱">
+									<option value="보주">
+									<option value="룬">
+									<option value="거대부적">
+									<option value="작은부적">
+									<option value="큰부적">
+									<option value="보석">
+									<option value="투구">
+									<option value="갑옷">
+									<option value="방패">
+									<option value="장갑">
+									<option value="허리띠">
+									<option value="신발">
+									
+									<option value="없음">
+								</datalist>
+			    		</div>
+			    		</div>
+			    	</div>
+			    	
+			        <div class="col-md-6">
+			        
+			        </div>
+			    </div>
+			    
+			    
+			    <!--#rarity-->
+			    <div class="row">
+				    <div class="col-md-6">
+				        
+						<div class="row">			        
+			        	<div class="col">
+			        		<p class="text-light fs-3 ">희귀도</p>
+			        	</div>
+			        	<div class="col">
+			        			<input class="form-control" list="datalistOptions5" id="rarityinput" placeholder="ex) 노말">
+			        			
+								<datalist id="datalistOptions5">
+									<option value="노말">
+									<option value="매직">
+									<option value="희귀">
+									<option value="고유">
+									<option value="세트">
+									<option value="제작">
+									<option value="룬어">
+									<option value="없음">
+								</datalist>
+			    		</div>
+			    		</div>
+			    	</div>
+			    	
+			        <div class="col-md-6">
+			        
+			        </div>
+			    </div>
+			    <!--#count-->
+			    <div class="row">
+				    <div class="col-md-6">
+				        
+						<div class="row">			        
+			        	<div class="col">
+			        		<p class="text-light fs-3 ">수량</p>
+			        	</div>
+			        	<div class="col">
+			        		 <input class="form-control" id="countinput" placeholder="ex) 1" aria-describedby="개수 설정하는 칸">
+			        		 
+			        		  
+			    		</div>
+			    		</div>
+			    	</div>
+			    	<!--#스탯 필터?-->
+			        <div class="col-md-6">
+			        
+			        </div>
+			    </div>
+			    <!--#교환 수단-->
+			    <div class="row">
+				    <div class="col-md-6">
+				        
+						<div class="row">			        
+			        		<div class="col">
+				        		<p class="text-light fs-3 ">판매 가격</p>
+			        		</div>
+			        		<div class="col">
+			        			<input class="form-control" id="sellinput1" list="datalistOptions7"  placeholder="ex) 룬" aria-describedby="개수 설정하는 칸">
+			        		 	<datalist id="datalistOptions7">
+									<option value="골드">
+									<option value="제시">
+								</datalist>
+			    			</div>
+			    			<div class="col">
+			        			<input class="form-control" id="sellinput2" list="runename"  placeholder="ex) 1" aria-describedby="개수 설정하는 칸">
+			        		 	
+			    			</div>
+			    		</div>
+			    	</div>
+			        <div class="col-md-6">
+			            
+			        </div>
+			    </div>
+			    <div class="row">
+				    <div class="col-md-8">
+				        
+						<div class="row">			        
+			        		<div class="col">
+				        		<p class="text-light fs-3 ">코멘트</p>
+			        		</div>
+			        		<div class="col-9">
+			        			<input class="form-control" id="commentinput"   placeholder="ex) 아이템 설명 ">
+			    			</div>
+			    		</div>
+			    	</div>
+			        <div class="col-md-4">
+			        
+			        </div>
+			    </div>
+			    <div class="row">
+				    <div class="col-md-8">
+				        
+						<div class="row">			        
+			        		<div class="col">
+				        		<p class="text-light fs-3 ">아이템 구분</p>
+			        		</div>
+			        		<div class="col-9">
+			        			<input class="form-control" id="identifierinput"   placeholder="귓속말로 받을 내용  ex)1번 패캐링 ">
+			    			</div>
+			    		</div>
+			    	</div>
+			        <div class="col-md-4">
+			        
+			        </div>
+			    </div>
+			    <div class="row">
+				    <div class="col-md-10">
+				        
+						<div class="row">			        
+				        	<div class="col-md-2">
+								<button type="button" class="btn btn-light" id="stat-filter-button">+스탯 필터</button>
+							</div>
+							<div class="col-md-2">
+								<button type="button" class="btn btn-light" id="stat-filter-button2">+스탯 필터2</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button type="button" class="btn btn-light" id="runwordbar-button">+룬워드 필터</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button type="button" class="btn btn-light" id="namefilter-button">이름필터 로딩</button>
+				    		</div>
+				    		<div class="col-md-2">
+								<button type="button" class="btn btn-light" id="filterreset-button">필터 리셋</button>
+				    		</div>
+			    		</div>
+			    	</div>
+
+
+			    </div>
+			    <div class="row">
+			    <p> </p>
+			    </div>
+   			    <div class="row" id = "stat-filter-div">
+	   			 
+
+			    
+				</div>
+				<p> </p>
+				<div class="row">
+			    				<button type="button" class="btn btn-light" id="insert-button">아이템 등록</button>
+			    </div>
+			    <p> </p>
+			    <!--return search item table -->
+       			
+       		
+        </div>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		
+		<script src="https://d18zq3onvlr5bf.cloudfront.net/d2rlistjson.js"></script>
+		<script src="https://d18zq3onvlr5bf.cloudfront.net/runevalue.js"></script>
+		
+		<script th:inline = "javascript">
+		
+		var address = "http://114.207.147.202:8080";
+	
+		function addlist1(listname,jsonlist)
+		{
+			var templist = document.getElementById(listname);
+			jsonlist.forEach(function(item){
+	   			var option = document.createElement('option');
+	   			option.value = item.kokr;
+	   			templist.appendChild(option);	
+			});			
+		}
+		
+		addlist1('statfilter1mod',statfilter_mod);
+		addlist1('statfilter2mod',statfilter2_mod);
+		addlist1('statfilter2skill',statfilter2_skill);
+		addlist1('namesearchoption',namesearch);
+		addlist1('runewordname',runewordname);
+		addlist1('datalistOptions7',runename);
+		
+		
+   		var namesearchbar = document.getElementById('name-search-bar1');
+   		namesearchbar.setAttribute('list','namesearchoption');
+		
+		
+		
+		var t = document.getElementById('stat-filter-button');
+	    t.addEventListener('click', function(event){
+		
+	        Createstatbar('','','');
+	    });
+	    var t2 = document.getElementById('stat-filter-button2');
+	    t2.addEventListener('click', function(event){
+		
+	        Createstatbar2('','','');
+	    });
+	    var insertbtn = document.getElementById('insert-button');
+	    insertbtn.addEventListener('click', function(event){
+		
+			insert();
+	    });
+	    
+	    var runewordbarbtn = document.getElementById('runwordbar-button');
+	    runewordbarbtn.addEventListener('click', function(event){
+		
+			runewordbar();
+	    });
+	    var filterresetbtn = document.getElementById('filterreset-button');
+	    filterresetbtn.addEventListener('click', function(event){
+		
+			removestats();
+	    });
+	    var battletag ='';
+	    /*<![CDATA[*/ 
+	    battletag = /*[[ ${battletag} ]]*/''; 
+	    /*]]*/
+
+
+
+	    
+	    //namefilter-button
+	    //namefilter-button
+	    var namefilterdbtn = document.getElementById('namefilter-button');
+	    namefilterdbtn.addEventListener('click', function(event){
+			var itemid="";
+			////console.log(namesearchbar.value);
+			if(namesearchbar.value!=null)
+			{
+				namesearch.forEach(function(item)
+				{
+					if(namesearchbar.value==item.kokr)
+					{
+						
+						itemid=item.id;
+						//console.log(item.id);
+						ajaxgetfilter(itemid);
+						return false;
+					}	
+				}
+				);	
+			}
+	    });
+	    //스탯필터1
+		var cnt1 = 1;
+		//스탯핉러2
+		var cnt2 = 1;
+	    
+	    
+	    function removestats()
+	    {
+			var temp = document.getElementById("name-search-bar1");
+			temp.value='';
+			temp = document.getElementById("categoryinput");
+			temp.value='';
+			temp = document.getElementById("rarityinput");
+			temp.value='';
+			temp = document.getElementById("countinput");
+			temp.value='';
+			temp = document.getElementById("sellinput1");
+			temp.value='';
+			temp = document.getElementById("sellinput2");
+			temp.value='';
+			for(var i=1;i<cnt1;i++)
+			{
+				var div1 = document.getElementById("stat-filter-div-div"+String(i));
+				div1.remove();
+			}
+			for(var i=1;i<cnt2;i++)
+			{
+				var div2 = document.getElementById("stat-filter2-div-div"+String(i));
+				div2.remove();
+			}
+			cnt1=1;
+			cnt2=1;
+			if(runewordcnt==1)
+			{
+				var div3 = document.getElementById("runewordbar-div-div");
+				div3.remove();
+				runewordcnt--;
+			}
+		}
+	    
+	    
+	    function insert()
+	    {
+			var name = document.getElementById("name-search-bar1");
+			var argument = ""
+			var argjson = new Object();
+			////console.log(name.value);
+			var description='';
+			//id searching
+			//namesearch
+			//battletag
+			argjson.battletag=battletag;
+			if(name.value!=null||name.value!='')
+			{
+				namesearch.forEach(function(item)
+				{
+					if(name.value==item.kokr)
+					{
+						////console.log(item.id);
+						argument = argument+"itemname "+String(item.id)+"!";
+						argjson.itemname = String(item.id);
+						description = description +item.kokr+'<br>';				
+						return false;
+					}
+					
+				}
+					
+				);	
+			}else
+			{
+				alert('이름에 베이스 아이템 혹은 아이템 이름을 입력해주세요');
+				return false;
+			}
+			//categoryinput(select) ladderhardcoreinput rarityinput countinput sellinput
+			
+			var tempid = document.getElementById("categoryinput");
+			if(tempid.value!=''||tempid.value!=null)
+			{
+				argument=argument+"category "+tempid.value+"!";
+				argjson.category = tempid.value;
+			}
+			tempid = document.getElementById("identifierinput");
+			if(tempid.value!=''||tempid.value!=null)
+			{
+				argument=argument+"comment "+tempid.value+"!";
+				argjson.identifier = tempid.value;
+			}
+			tempid = document.getElementById("commentinput");
+			if(tempid.value!=''||tempid.value!=null)
+			{
+				argument=argument+"comment "+tempid.value+"!";
+				argjson.itemcomment = tempid.value;
+			}
+			//commentinput
+			
+			tempid = document.getElementById("ladderhardcoreinput");
+			if(tempid.value.includes('래더'))
+			{
+				argument=argument+"ladder Y!";
+				argjson.ladder = "Y";
+			}else
+			{
+				argument=argument+"ladder N!";
+				argjson.ladder = "N";
+			}
+			if(tempid.value.includes('하드코어'))
+			{
+				argument=argument+"hardcore Y!";
+				argjson.hardcore = "Y";
+			}else
+			{
+				argument=argument+"hardcore N!";
+				argjson.hardcore= "N";
+			}
+				
+			//sellinput1,sellinput2
+			
+			tempid = document.getElementById("sellinput1");
+			var sellingprice1 = tempid.value;
+			var sellingprice2='';
+			var sellingnum = '';
+			if((sellingprice1==''||sellingprice1==null))
+			{
+				alert("판매 가격을 입력해주세요")
+				return false;
+			}else
+			{
+				
+				tempid = document.getElementById("sellinput2");
+				
+				sellingprice2 = tempid.value;
+				
+				
+				if(sellingprice1=='골드')
+				{
+					if((sellingprice2==''||sellingprice2==null))
+					{
+						alert("판매 가격을 입력해주세요")
+						return false;
+					}
+					argjson.sellcategory='골드';
+					argjson.sellingnum = Number(sellingprice2);
+					sellingprice1 =sellingprice2 +' '+ sellingprice1;
+				}else if(sellingprice1=='제시')
+				{
+					
+					argjson.sellingnum = Number(9999999999);
+				}else
+				{
+					if((sellingprice2==''||sellingprice2==null))
+					{
+						alert("판매 가격을 입력해주세요")
+						return false;
+					}
+					argjson.sellcategory='룬';
+					
+					//바꿔야됨
+					sellingprice1
+					
+					var runeid= getidtovalue('runeid',sellingprice1);
+					
+					console.log(runeid);
+					console.log(Number(sellingprice2));
+					console.log(Number(getidtovalue('runevalue',runeid)));
+					
+					argjson.sellingnum= Number(getidtovalue('runevalue',runeid))*Number(sellingprice2)*1200.0;
+					sellingprice1 = sellingprice1+"!"+sellingprice2;
+					console.log(argjson.sellingnum);
+				}
+					
+				
+				
+				
+			}
+			
+			argjson.sellingprice=sellingprice1;
+			
+			
+			tempid = document.getElementById("rarityinput");
+			if(tempid.value!=''&&tempid.value!=null)
+			{
+				argument=argument+"rarity "+tempid.value+"!";
+				argjson.rarity = tempid.value;
+			}else
+			{
+				alert('희귀도를 입력해주세요');
+				return false;
+			}
+			
+			tempid = document.getElementById("countinput");
+			if(isNaN(tempid.value))
+			{
+				alert('수량을 숫자로 입력해주세요');
+				return false;
+			}
+			if((tempid.value!=''&&tempid.value!=null))
+			{
+				argument=argument+"itemcount "+Number(tempid.value)+"!";
+				argjson.itemcount=Number(tempid.value);
+			}else
+			{
+				alert('수량을 입력해주세요');
+				return false;
+			}
+			
+				
+			
+			
+			if(runewordcnt==1)
+			{
+				var tid = document.getElementById("runewordbar1");
+				runewordname.forEach(function(item)
+				{
+					if(tid.value==item.kokr)
+					{
+						argument = argument+"runewordname "+item.id+"!";
+						argjson.runewordname = String(item.id);
+						description=description+item.kokr+'<br>';
+						////console.log('runewordname'+item.id);
+					}
+				});	
+				
+			}
+			
+			
+			//statfilter 1
+			for(var i=1 ;i<cnt1;i++)			
+			{
+				// statfilter_mod
+				var tempid=1;
+				
+				var statfilter1_arg="";
+				var tid = document.getElementById("statfilter1_id"+String(i));
+				
+				var des = '';
+				
+				if(tid==null||tid.value=="")
+				{
+					continue;
+				}
+				
+				statfilter_mod.forEach(function(item)
+				{
+					if(tid.value==item.kokr)
+					{
+						statfilter1_arg = item.id;
+						//console.log("statfilter1"+item.id);
+						des=item.kokr;
+						
+						return false;
+					}
+					
+				}
+				);
+				
+				tid = document.getElementById("statfilter1_level"+String(i));
+				
+				if(tid.checked){
+					statfilter1_arg=statfilter1_arg+'C';
+					des=des+" (캐릭터 레벨에 비례해서)";	
+				}
+				
+				
+				tid = document.getElementById("statfilter1_min"+String(i));
+				if(tid.value==""||tid.value=='입력')
+				{
+					alert('값을 입력해주세요');
+					return false;
+					
+				}
+				else
+				{
+					argjson[''+statfilter1_arg]=Number(tid.value);
+					statfilter1_arg = statfilter1_arg +" "+tid.value+"!";
+					des = descriptionreplace(des,tid.value);
+					
+				}
+				description=description+des+"<br>";
+					
+				//console.log(statfilter1_arg);
+				argument = argument+statfilter1_arg;
+			}
+			
+			
+			
+			for(var i=1 ;i<cnt2;i++)			
+			{
+				tid = document.getElementById("statfilter2_id"+String(i));
+				tid2 = document.getElementById("statfilter2_skill"+String(i));
+				var statfilter2_arg="";
+				var des ='';
+				if(tid==null||tid.value==""||tid2.value=="")
+				{
+					continue;
+				}	
+				statfilter2_mod.forEach(function(item)
+				{
+					if(tid.value==item.kokr)
+					{
+						////console.log(item.id);
+						//console.log(tid.value);
+						//console.log(item.id);
+						statfilter2_arg = statfilter2_arg+item.id;
+						des= item.kokr;
+						return false;
+					}
+					
+				});
+				
+				
+				statfilter2_skill.forEach(function(item)
+				{
+					if(tid2.value==item.kokr)
+					{
+						////console.log(item.id);
+						statfilter2_arg=statfilter2_arg+"S"+item.id;
+						des=des.replace('%s',item.kokr);
+						return false;
+					}
+					
+				});
+				tid = document.getElementById("statfilter2_min"+String(i));
+				
+				if(tid.value=="")
+				{
+					
+					alert("값을 입력해주세요");
+					return false;
+				}else
+				{
+					argjson[''+statfilter2_arg]=Number(tid.value);
+					statfilter2_arg = statfilter2_arg +" "+tid.value+"!";
+					des=	 descriptionreplace(des,tid.value);
+				}
+				//console.log("statfilter2_arg");
+				argument= argument+statfilter2_arg;
+				description= description+des+'<br>';
+			}
+			
+			//description.replaceAll('+','%+');
+			argjson.description=description;
+			console.log(description);
+			
+			ajaxinsert(argjson);
+		}
+	    
+		function Createstatbar(id1,value1,c1)
+		{
+			var row = document.getElementById("stat-filter-div");
+			var div1 = document.createElement("div");
+			div1.id = "stat-filter-div-div"+cnt1;
+			div1.className="row";
+			
+			row.appendChild(div1);
+			
+			
+			var div2 = document.createElement("div");
+			div2.className="col-md-7";
+			var div3 = document.createElement("div");
+			div3.className="col-md-2";
+			var div4 = document.createElement("div");
+			div4.className="col-md-1";
+			
+			var div6 = document.createElement("div");
+			div6.className="col-md-1";
+			
+			div1.appendChild(div2);
+			div1.appendChild(div3);
+			div1.appendChild(div4);
+			div1.appendChild(div6);
+			
+			var row2=document.createElement("row");
+			var row3=document.createElement("row");
+			var row4=document.createElement("row");
+			var row6=document.createElement("row");
+			
+			div2.appendChild(row2);
+			div3.appendChild(row3);
+			
+			div4.appendChild(row4);
+			div6.appendChild(row6);
+			var row2_stat_filter=document.createElement("input");
+			row2.appendChild(row2_stat_filter);
+			
+			var row3_level_button=document.createElement("input");
+			row3.appendChild(row3_level_button);
+			var row3_level_label=document.createElement("label");
+			row3.appendChild(row3_level_label);
+			
+			var row4_min =document.createElement("input");
+			row4.appendChild(row4_min);
+			var row6_closebutton =document.createElement("button");
+			row6.appendChild(row6_closebutton);
+			
+			
+			var obj = document.createElement("input");
+		    
+		    
+		    
+		    
+		    row2_stat_filter.className="form-control";
+		    row2_stat_filter.placeholder="스탯 필터";
+		    row2_stat_filter.setAttribute('list','statfilter1mod');
+		    		    
+		   	row3_level_button.className="form-check-input";
+		   	row3_level_button.type="checkbox"
+		   	row3_level_label.className="form-check-label";
+		   	row3_level_label.style.color = "white";
+		   	row3_level_label.innerText=" 캐릭터레벨비례";
+		   	
+		    row4_min.placeholder="값";
+		    row4_min.className="form-control";
+		    row6_closebutton.className="btn-close btn-close-white";
+		    row6_closebutton.addEventListener('click', function(event){
+		
+				div1.remove();
+			
+	    	});
+	    	if(id1!=''&&value1!='')
+	    	{
+				row2_stat_filter.value=getidtovalue('statfilter1',id1);
+				row4_min.value=value1;
+			}
+			if(c1=='1')
+			{
+				row3_level_button.checked=true;
+			}
+			
+	    	
+		    
+		   	row2_stat_filter.id="statfilter1_id"+cnt1;
+		   	row3_level_button.id="statfilter1_level"+cnt1;
+		    row4_min.id="statfilter1_min"+cnt1;
+		    cnt1++;
+		}
+		
+		function Createstatbar2(id1,skill1,value1)
+		{
+			var row = document.getElementById("stat-filter-div");
+			var div1 = document.createElement("div");
+			div1.id = "stat-filter2-div-div"+cnt2;
+			div1.className="row";
+			
+			row.appendChild(div1);
+			
+			
+			var div2 = document.createElement("div");
+			div2.className="col-md-7";
+			var div3 = document.createElement("div");
+			div3.className="col-md-2";
+			var div4 = document.createElement("div");
+			div4.className="col-md-1";
+			
+			var div6 = document.createElement("div");
+			div6.className="col-md-1";
+			
+			div1.appendChild(div2);
+			div1.appendChild(div3);
+			div1.appendChild(div4);
+			//div1.appendChild(div5);
+			div1.appendChild(div6);
+			
+			var row2=document.createElement("row");
+			var row3=document.createElement("row");
+			var row4=document.createElement("row");
+			var row6=document.createElement("row");
+			
+			
+			div2.appendChild(row2);
+			div3.appendChild(row3);
+			div4.appendChild(row4);
+			div6.appendChild(row6);
+			
+			var row2_stat_filter=document.createElement("input");
+			row2.appendChild(row2_stat_filter);
+			var row3_skill=document.createElement("input");
+			row3.appendChild(row3_skill);
+			
+			
+			var row4_min =document.createElement("input");
+			row4.appendChild(row4_min);
+			var row6_closebutton =document.createElement("button");
+			row6.appendChild(row6_closebutton);
+			
+			var obj = document.createElement("input");
+		    
+		    
+		    row2_stat_filter.className="form-control";
+		    row2_stat_filter.placeholder="스탯 필터";
+		    row2_stat_filter.setAttribute('list','statfilter2mod');
+		    		    
+		    row3_skill.placeholder="스킬";
+		    row3_skill.className="form-control";
+		    row3_skill.setAttribute('list','statfilter2skill');		    
+		    row4_min.placeholder="값";
+		    row4_min.className="form-control";
+		    
+		    row6_closebutton.className="btn-close btn-close-white";
+		    row6_closebutton.addEventListener('click', function(event){
+		
+				div1.remove();
+			
+	    	});
+		    row2_stat_filter.id="statfilter2_id"+cnt2;
+		   	row3_skill.id="statfilter2_skill"+cnt2;
+		    row4_min.id="statfilter2_min"+cnt2;
+			cnt2++;		    
+			if(id1!=''&&skill1!=''&&value1!='')
+			{
+				row2_stat_filter.value=getidtovalue('statfilter2',id1);
+				row3_skill.value=getidtovalue('statfilter2skill',skill1);
+				row4_min.value = value1;
+			}
+			
+			
+		}
+		var runewordcnt =0;
+		function runewordbar()
+		{
+			if(runewordcnt==1)
+			{
+				return false;
+			}
+			runewordcnt++;
+			var row = document.getElementById("stat-filter-div");
+			var div1 = document.createElement("div");
+			div1.id = "runewordbar-div-div";
+			div1.className="row";
+			
+			row.appendChild(div1);
+			
+			
+			var div2 = document.createElement("div");
+			div2.className="col-md-7";
+			var div3 = document.createElement("div");
+			div3.className="col-md-3";
+			var div4 = document.createElement("div");
+			div4.className="col-md-1";
+			div1.appendChild(div2);
+			div1.appendChild(div3);
+			div1.appendChild(div4);
+			var row2=document.createElement("row");
+			div2.appendChild(row2);
+			var row3=document.createElement("row");
+			div3.appendChild(row3);
+			var row4=document.createElement("row");
+			div4.appendChild(row4);
+			var row3_button =document.createElement("button");
+			row3.appendChild(row3_button);
+			row3_button.innerHTML="룬워드 필터 가져오기";
+			row3_button.className="btn btn-close-white";
+			
+			row3_button.addEventListener('click', function(event){
+		
+				//필터가져오기
+				
+				runewordname.forEach(function(item)
+				{
+					if(item.kokr==runewordbar.value)
+					{
+						ajaxgetfilter(item.id);
+						return true;
+					}
+					
+				});
+				
+				
+				
+	    	});
+		
+			var row4_closebutton =document.createElement("button");
+			row4.appendChild(row4_closebutton);
+			row4_closebutton.className="btn-close btn-close-white";
+		    row4_closebutton.addEventListener('click', function(event){
+		
+				div1.remove();
+				runewordcnt--;
+	    	});
+		
+			
+			
+			var runewordbar=document.createElement("input");
+			row2.appendChild(runewordbar);
+			runewordbar.className="form-control";
+			runewordbar.placeholder="룬워드 이름을 선택해주세요";
+			runewordbar.setAttribute('list','runewordname');
+			runewordbar.id="runewordbar1";
+			
+		}		
+		
+		
+		
+		function setfilter(itemfilterjson)
+		{
+			var rarity = itemfilterjson.rarity
+			//console.log(rarity);
+			if( rarity =='룬어')
+			{
+				runewordfilter(itemfilterjson);
+			}else
+			{
+				anyfilter(itemfilterjson);
+			}
+		}
+		
+		function getidtovalue(mean,id)
+		{
+			var ret='';
+			if(mean=="runeword")
+			{
+				runewordname.forEach(function(item)
+				{
+					if(id==item.id)
+					{
+						ret= item.kokr;
+						return false;
+					}						
+				});	
+			}
+			if(mean=='statfilter1')
+			{
+				//console.log("getidtovaluea"+id);
+				ret = '';
+				statfilter_mod.forEach(function(item){
+		   			if(id==item.id)
+					{
+						ret= item.kokr;
+						return false;
+					}
+				});
+				return ret;				
+			}
+			if(mean=='statfilter2')
+			{
+				 
+				statfilter2_mod.forEach(function(item){
+		   			if(id==item.id)
+					{
+						ret=item.kokr;
+						return false;
+					}
+				});
+			}
+			if(mean=='statfilter2skill')
+			{
+				statfilter2_skill.forEach(function(item){
+		   			if(id==item.id)
+					{
+						ret=item.kokr;
+						return false;
+					}
+				});
+			}
+			if(mean =='runeid')
+			{
+				runename.forEach(function(item){
+		   			if(id==item.kokr)
+					{
+						ret=item.id;
+						console.log(ret);
+						return false;
+					}
+				});
+			}
+			if(mean =='runevalue')
+			{
+				runename.forEach(function(item){
+		   			if(id==item.id)
+					{
+						ret=item.value;
+						console.log(item.value);
+						return false;
+					}
+				});
+			}
+			
+			return ret;
+		}
+		
+		function runewordfilter(itemfilterjson)
+		{
+			document.getElementById('rarityinput').value='룬어';
+			document.getElementById('countinput').value=itemfilterjson.itemcount;
+			delete itemfilterjson.rarity;
+			delete itemfilterjson.itemcount;
+			delete itemfilterjson.runewordname;
+			setfilters(itemfilterjson);
+		}
+		
+		function anyfilter(itemfilterjson)
+		{
+			document.getElementById('rarityinput').value=itemfilterjson.rarity;
+			document.getElementById('countinput').value=itemfilterjson.itemcount;
+			document.getElementById('categoryinput').value=itemfilterjson.itemcategory;
+			delete itemfilterjson.rarity;
+			delete itemfilterjson.itemcount;
+			delete itemfilterjson.itemcategory;
+			delete itemfilterjson.itemname;
+			setfilters(itemfilterjson);
+		}
+		function setfilters(itemfilterjson)
+		{
+			var keys = Object.keys(itemfilterjson);
+			
+			//console.log(keys);
+			
+			keys.forEach(function (item)
+			{
+				if(item.indexOf('C')!=-1)
+				{
+					var id1= item.split('C');
+					Createstatbar(id1[0],itemfilterjson[item],'1');
+					//console.log("레벨 비례 스탯필터 1");					
+				}else if(item.indexOf('S')!=-1)
+				{
+					var id_skill= item.split('S');
+					Createstatbar2(id_skill[0],id_skill[1],itemfilterjson[item]);
+					//console.log("스탯필터2");
+				}else
+				{
+					//console.log(item);
+					Createstatbar(item,itemfilterjson[item],'0');
+					//console.log("스탯필터1");
+				}
+			});
+		}
+		
+		
+		
+		
+		function ajaxgetfilter(arg)
+		{
+			//console.log("ajaxtest "+arg);
+			var retjson='undefined';
+			$.ajax({
+				url: address+"/getitemfilter",
+				type:"GET",
+				dataType: "JSON",
+				data: 'param='+arg,
+				/*
+				data:
+				*/
+				success: function(result) {
+					if (result) {
+						
+						setfilter(result);
+						
+					} else {
+					alert("불러오기 실패 현재 필터가 존재하지 않습니다.");
+					}
+				},
+				error : function(error) {
+        			alert("불러오기 실패 잠시 후 다시 시도해 주시기 바랍니다.");
+    			}
+			});
+
+	
+		}
+		function ajaxinsert(arg)
+		{
+			//console.log("ajaxtest "+JSON.stringify(arg));
+			var retjson='';
+			$.ajax({
+				url:address+"/inputitem",
+				type:"POST",
+				dataType: "JSON",
+				data: 'param='+encodeURI(JSON.stringify(arg)),
+				success: function(result) {
+					if (result) {
+						
+						alert("입력에 성공했습니다");
+						
+					} else {
+						alert("입력에 실패했습니다.");
+					}
+				},
+				
+				error : function(error) {
+        			alert("입력 실패 잠시 후 다시 시도해 주시기 바랍니다.");
+    			}
+			});
+
+	
+		}
+
+		
+		function descriptionnumber1(number)
+		{
+			var ret ='';
+			if(number>0)
+			{
+				ret='+'+ string(number);
+			}else if(number ==0)
+			{
+				ret = 0;
+			}else if(number <0)
+			{
+				ret=string(number);
+			}
+			
+			return ret;
+		}
+		function descriptionreplace(mod,num)
+		{
+			
+			var str = mod.replace('%d - %d',num);
+			str = str.replace('%d',num);
+			return str;
+			
+		}
+		
+		</script>
+        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>

@@ -1,0 +1,81 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          blizzard:
+            client-id: c900b0376ee34879a4f260d30bf6bc69
+            client-secret: Htg0ciZRkK5Alb9XFthVsk17mA5S1qOp
+            client-name: Battle.net OAuth Sample Client
+            scope: openid,sc2.profile
+        provider:
+          blizzard:
+            issuer-uri: https://kr.battle.net/oauth
+
+  h2:
+    console:
+      enabled: true
+      path: /h2          
+      setting:
+        web-allow-others: true
+  datasource:
+    driver-class=name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    data: classpath:h2/data.sql
+    schema: classpath:h2/schema.sql
+    initialization-mode: always
+              
+  thymeleaf:
+    cache: false
+  jpa:
+    defer-datasource-initialization: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+blizzard:
+  api:
+    host: https://us.api.blizzard.com
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+
+
+amazon:
+  dynamodb:
+    endpoint: "dynamodb.ap-northeast-2.amazonaws.com"
+  aws:
+    accesskey: AKIA2L2YMUFKCIRGQW5Z
+    secretkey: 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
+
+server:  error:
+    whitelabel:
+      enabled: FALSE
+  servlet:
+    session:
+      timeout: 300m
+  # H2 설정
+#spring.h2.console.enabled=true
+#spring.h2.console.path=/h2
+#spring.h2.console.settings.web-allow-others=true
+
+
+# Datasource 설정
+#spring.datasource.driver-class-name=org.h2.Driver
+#spring.datasource.url=jdbc:h2:mem:testdb
+#spring.datasource.username=sa
+#spring.datasource.password=
+#
+#spring.jpa.defer-datasource-initialization=true
+#spring.datasource.data=classpath:h2/data.sql
+#spring.datasource.schema=classpath:h2/schema.sql
+#spring.datasource.initialization-mode=always
+
+#에러페이지
+#server.error.whitelabel.enabled=FALSE
+#server.servlet.session.timeout=300m

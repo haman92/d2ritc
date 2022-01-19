@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>D2R 아이템 중계소</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    </head>
+    <body>
+        <div class="d-flex bg-dark" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-dark" id="sidebar-wrapper">
+
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item"><a class="nav-link disabled" th:text="${battletag}"></a></li>
+                            	<li class="nav-item active"><a class="nav-link" th:href="@{/}">홈</a></li>
+                                <li class="nav-item active"><a class="nav-link" th:href="@{/search}">검색</a></li>
+                                <li class="nav-item active"><a class="nav-link" th:href="@{/insert}">물품등록</a></li>
+                                <li class="nav-item active"><a class="nav-link" th:href="@{/mypage}">마이페이지</a></li>
+                                <li class="nav-item"><a class="nav-link" tH:href="@{/logout}">로그아웃</a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+		   
+		   <div class="container" id= "container">
+		   		
+       			<div class="row" id = "tablerow">
+       				<table class="table table-dark table-hover table-striped table-bordered"id = "searchitemtable">
+       				  <thead>
+						    <tr>
+						      <th scope="col">계정 이름</th>
+						      <th scope="col">아이템 옵션</th>
+						      <th scope="col">아이템 수량</th>
+						      <th scope="col">등록일자 및 코멘트</th>
+						      <th scope="col">가격</th>
+						      <th scope="col">아이템갱신</th>
+						      <th scope="col">아이템삭제</th>
+						    </tr>
+       				  </thead>
+       				  </table>
+       			</div>
+       		
+        </div>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		
+
+		<script>
+		
+		var battletag ='';
+	    /*<![CDATA[*/ 
+	    battletag = '[[ ${battletag} ]]'; 
+	    /*]]*/
+	    var address = "http://114.207.147.202:8080";
+	    setup();
+	    function setup()
+	    {
+			var argument ='';
+		    
+	    
+	    	battletag = battletag.replace('#','%');
+	    	argument = 'BattleTag '+battletag+'!'
+	    	console.log(battletag);
+			
+	    	//argument = 'BattleTag trapcard#3319';
+		    ajaxbtgetitem(argument);
+		}
+	    
+	    
+		function addtablerow(itemlist)
+		{
+			
+			var table1 = document.getElementById('searchitemtable');
+			for(var x =table1.rows.length;x>1;x--)
+			{
+				table1.deleteRow(1);
+			}			
+			itemlist.forEach(function(item){
+				var i = table1.rows.length;
+				var row = table1.insertRow(i);
+				row.insertCell(0).innerHTML=item.BattleTag;
+				table1.style='text-align: center; vertical-align: middle;"';
+				row.insertCell(1).innerHTML=item.description;
+				
+				row.insertCell(2).innerHTML=item.itemcount;
+				var sellingprice = String(item.sellingprice);
+				if(sellingprice.indexOf('골드')!=-1)
+				{
+						sellingprice = sellingprice.replace('!','<br>')+'골드';
+				}else if(sellingprice.indexOf('룬')!=-1)
+				{
+					sellingprice = sellingprice.replace('!','<br>')+'개';
+				}
+				var now = new Date();
+				var iddate = String(item.InputTime);
+				var itemdate = new Date();
+				
+				itemdate.setFullYear(iddate.substring(0,4));
+				
+				itemdate.setMonth(iddate.substring(4,6)-1);
+				itemdate.setDate(iddate.substring(6,8));
+				itemdate.setHours(iddate.substring(8,10));
+				itemdate.setMinutes(iddate.substring(10,12));
+				itemdate.setSeconds(iddate.substring(12,14));
+				var decisiontime = Math.floor((now-itemdate)/(1000*60));
+				if(decisiontime>=1440)
+				{
+					row.insertCell(3).innerHTML=Math.floor((now-itemdate)/(1000*3600*24))+'일전 등록<br>'+item.itemcomment;
+				}
+				else if(decisiontime>0&&decisiontime<60)
+				{
+					row.insertCell(3).innerHTML=Math.floor((now-itemdate)/(1000*60))+'분전 등록<br>'+item.itemcomment;	
+				}else
+				{
+					row.insertCell(3).innerHTML=Math.floor((now-itemdate)/(1000*3600))+'시간전 등록<br>'+item.itemcomment;	
+				}
+				
+				
+				row.insertCell(4).innerHTML=sellingprice;
+				var btn1 = document.createElement("button");
+				btn1.className='btn btn-light';
+				btn1.innerHTML='아이템 갱신';
+				btn1.addEventListener('click', function(event){
+					var sendjson = new Object();
+					sendjson.BattleTag=String(item.BattleTag).replace('#','%');
+					console.log(sendjson.BattleTag);
+					sendjson.InputTime=item.InputTime;
+					ajaxbtupdateitem(sendjson);
+	    		});
+	    		var btn2 = document.createElement("button");
+				btn2.className='btn btn-light';
+				btn2.innerHTML='아이템 삭제';
+				btn2.addEventListener('click', function(event){
+					var sendjson = new Object();
+					sendjson.BattleTag=String(item.BattleTag).replace('#','%');
+					console.log(sendjson.BattleTag);
+					sendjson.InputTime=item.InputTime;
+					ajaxbtdeleteitem(sendjson);
+					
+	    		});
+				row.insertCell(5).appendChild(btn1);
+				row.insertCell(6).appendChild(btn2);
+				
+				 
+			});
+		}
+		
+		
+		function ajaxbtgetitem(arg)
+		{
+			console.log("ajaxtest "+arg);
+			$.ajax({
+				url:address+"/getbtddbitem",
+				
+				type:"GET",
+				dataType: "json",
+				data:'param='+encodeURI(arg),
+				success: function(result) {
+					
+				if (result[0].none=='1') {
+					
+					
+					
+				} else {
+					
+					addtablerow(result);
+				}
+				}
+			});
+		}
+		function ajaxbtupdateitem(arg)
+		{
+			console.log("ajaxtest "+arg);
+			$.ajax({
+				url:address+"/updateddbitem",
+				
+				type:"GET",
+				dataType: "json",
+				data:'param='+encodeURI(JSON.stringify(arg)),
+				success: function(result) {
+					alert('갱신되었습니다 페이지를 다시로딩해주세요');
+				if (result) {
+					
+					
+					
+				} else {
+					
+				}
+				}
+			});
+		}
+		function ajaxbtdeleteitem(arg)
+		{
+			console.log("ajaxtest "+arg);
+			$.ajax({
+				url:address+"/deleteddbitem",
+				
+				
+				type:"GET",
+				dataType: "json",
+				data:'param='+encodeURI(JSON.stringify(arg)),
+				success: function(result) {
+					alert('갱신되었습니다 페이지를 다시로딩해주세요');
+				if (result) {
+					
+					
+					
+				} else {
+					
+				}
+				}
+			});
+		}
+		</script>
+        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>

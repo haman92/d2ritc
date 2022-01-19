@@ -1,0 +1,1 @@
+insert into USER (battletag,role) values ('trapcard','ADMIN');
